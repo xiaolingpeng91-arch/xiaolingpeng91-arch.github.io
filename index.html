@@ -1,0 +1,20 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>合了个十截图分析器</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f6f7f4;color:#1f2623;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+  .box{max-width:520px;padding:24px;text-align:center}.spin{width:34px;height:34px;margin:0 auto 16px;border:4px solid #d8ded8;border-top-color:#cf2732;border-radius:50%;animation:s 1s linear infinite}@keyframes s{to{transform:rotate(360deg)}}p{color:#6c756f;line-height:1.55}
+</style>
+<div class="box"><div class="spin"></div><h1>合了个十截图分析器</h1><p>正在打开工具...</p></div>
+<script>
+(async()=>{
+  const parts=["parts/00.txt","parts/01.txt","parts/02.txt","parts/03.txt","parts/04.txt","parts/05.txt","parts/06.txt","parts/07.txt","parts/08.txt","parts/09.txt","parts/10.txt","parts/11.txt","parts/12.txt"];
+  const base64=(await Promise.all(parts.map(async p=>{const r=await fetch(p+'?v=14'); if(!r.ok) throw new Error(p); return r.text();}))).join('');
+  const bin=atob(base64);
+  const bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  const html=new TextDecoder().decode(bytes);
+  document.open(); document.write(html); document.close();
+})().catch(error=>{document.body.innerHTML='<div class="box"><h1>打开失败</h1><p>请刷新页面再试。</p><p>'+String(error.message||error)+'</p></div>';});
+</script>
